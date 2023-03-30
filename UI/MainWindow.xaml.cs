@@ -24,5 +24,10 @@ namespace PoolEight
         {
             InitializeComponent();
         }
+
+        private void HitBall(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

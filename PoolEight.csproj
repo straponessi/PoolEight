@@ -8,8 +8,60 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Assets\" />
-    <Folder Include="Core\" />
+    <None Remove="UI\Assets\Resources\0.jpg" />
+    <None Remove="UI\Assets\Resources\1.jpg" />
+    <None Remove="UI\Assets\Resources\10.jpg" />
+    <None Remove="UI\Assets\Resources\11.jpg" />
+    <None Remove="UI\Assets\Resources\12.jpg" />
+    <None Remove="UI\Assets\Resources\13.jpg" />
+    <None Remove="UI\Assets\Resources\14.jpg" />
+    <None Remove="UI\Assets\Resources\15.jpg" />
+    <None Remove="UI\Assets\Resources\2.jpg" />
+    <None Remove="UI\Assets\Resources\3.jpg" />
+    <None Remove="UI\Assets\Resources\4.jpg" />
+    <None Remove="UI\Assets\Resources\5.jpg" />
+    <None Remove="UI\Assets\Resources\6.jpg" />
+    <None Remove="UI\Assets\Resources\7.jpg" />
+    <None Remove="UI\Assets\Resources\8.jpg" />
+    <None Remove="UI\Assets\Resources\9.jpg" />
+    <None Remove="UI\Assets\Resources\capsule.png" />
+    <None Remove="UI\Assets\Resources\cubemap.jpg" />
+    <None Remove="UI\Assets\Resources\logo.png" />
+    <None Remove="UI\Assets\Resources\queue.png" />
+    <None Remove="UI\Assets\Resources\splashscreen.png" />
+    <None Remove="UI\Assets\Resources\table.png" />
+    <None Remove="UI\Assets\Resources\table_mask.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UI\Assets\Sound\" />
+    <Folder Include="Core\Physics\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="UI\Assets\Resources\0.jpg" />
+    <Resource Include="UI\Assets\Resources\1.jpg" />
+    <Resource Include="UI\Assets\Resources\10.jpg" />
+    <Resource Include="UI\Assets\Resources\11.jpg" />
+    <Resource Include="UI\Assets\Resources\12.jpg" />
+    <Resource Include="UI\Assets\Resources\13.jpg" />
+    <Resource Include="UI\Assets\Resources\14.jpg" />
+    <Resource Include="UI\Assets\Resources\15.jpg" />
+    <Resource Include="UI\Assets\Resources\2.jpg" />
+    <Resource Include="UI\Assets\Resources\3.jpg" />
+    <Resource Include="UI\Assets\Resources\4.jpg" />
+    <Resource Include="UI\Assets\Resources\5.jpg" />
+    <Resource Include="UI\Assets\Resources\6.jpg" />
+    <Resource Include="UI\Assets\Resources\7.jpg" />
+    <Resource Include="UI\Assets\Resources\8.jpg" />
+    <Resource Include="UI\Assets\Resources\9.jpg" />
+    <Resource Include="UI\Assets\Resources\capsule.png" />
+    <Resource Include="UI\Assets\Resources\cubemap.jpg" />
+    <Resource Include="UI\Assets\Resources\logo.png" />
+    <Resource Include="UI\Assets\Resources\queue.png" />
+    <Resource Include="UI\Assets\Resources\splashscreen.png" />
+    <Resource Include="UI\Assets\Resources\table.png" />
+    <Resource Include="UI\Assets\Resources\table_mask.png" />
   </ItemGroup>
 
 </Project>

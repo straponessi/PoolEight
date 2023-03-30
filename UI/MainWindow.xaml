@@ -5,8 +5,63 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PoolEight"
         mc:Ignorable="d"
-        Height="1080" Width="1920">
+        Height="1080" Width="1920" 
+        WindowState="Maximized"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        >
+    <Window.Resources>
+        <Style x:Key="ImageButton" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border
+                            Padding="0,200,0,200"
+                            Background="Transparent">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    
     <Grid>
-
+        <Grid ClipToBounds="True" Width="Auto" Height="Auto">
+            <Grid.Background>
+                <RadialGradientBrush GradientOrigin="0.5, 0.5" Center="0.5, 0.5" RadiusX="0.5" RadiusY="0.5">
+                    <RadialGradientBrush.GradientStops>
+                        <GradientStop Color="LightSlateGray" Offset="0"/>
+                        <GradientStop Color="DarkSlateGray" Offset="1"/>
+                    </RadialGradientBrush.GradientStops>
+                </RadialGradientBrush>
+            </Grid.Background>
+            <Button Style="{StaticResource ImageButton}" Click="HitBall">
+                <TabPanel>
+                    <Canvas Height="547" Width="200">
+                        <Image Source="/UI/Assets/Resources/capsule.png" Panel.ZIndex="2" Height="547"/>
+                        <Canvas x:Name="Half" Width="200" Height="547" Panel.ZIndex="1"/>
+                    </Canvas>
+                    <Canvas Width="970" Height="547">
+                        <Canvas.Background>
+                            <ImageBrush ImageSource="/UI/Assets/Resources/table.png"/>
+                        </Canvas.Background>
+                        <Canvas x:Name="Table" Width="970" Height="547" ClipToBounds="True">
+                            <Canvas.Background>
+                                <ImageBrush ImageSource="/UI/Assets/Resources/table.png"/>
+                            </Canvas.Background>
+                            <Canvas.OpacityMask>
+                                <ImageBrush ImageSource="/UI/Assets/Resources/table_mask.png"/>
+                            </Canvas.OpacityMask>
+                        </Canvas>
+                        <Image x:Name="Overlay" Width="970" Height="547" Stretch="None"/>
+                    </Canvas>
+                    <Canvas Height="547" Width="200">
+                        <Image Source="/UI/Assets/Resources/capsule.png" Panel.ZIndex="2" Height="547"/>
+                        <Canvas x:Name="Full" Width="200" Height="547" Panel.ZIndex="1"/>
+                    </Canvas>
+                </TabPanel>
+            </Button>
+        </Grid>
     </Grid>
 </Window>
