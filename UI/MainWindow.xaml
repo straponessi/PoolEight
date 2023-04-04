@@ -62,6 +62,7 @@
                     </Canvas>
                 </TabPanel>
             </Button>
+            <Image x:Name="Queue" Source="/UI/Assets/Resources/queue.png" Width="200" Height="200" IsHitTestVisible="False" />
         </Grid>
     </Grid>
 </Window>
