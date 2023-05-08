@@ -1,4 +1,4 @@
-﻿<Window x:Class="PoolEight.MainWindow"
+﻿    <Window x:Class="PoolEight.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -39,30 +39,30 @@
             <Button Style="{StaticResource ImageButton}" Click="HitBall">
                 <TabPanel>
                     <Canvas Height="547" Width="200">
-                        <Image Source="/UI/Assets/Resources/capsule.png" Panel.ZIndex="2" Height="547"/>
+                        <Image Source="/Resources\Images\capsule.png " Panel.ZIndex="2" Height="547"/>
                         <Canvas x:Name="Half" Width="200" Height="547" Panel.ZIndex="1"/>
                     </Canvas>
                     <Canvas Width="970" Height="547">
                         <Canvas.Background>
-                            <ImageBrush ImageSource="/UI/Assets/Resources/table.png"/>
+                            <ImageBrush ImageSource="/Resources\Images\table.png"/>
                         </Canvas.Background>
                         <Canvas x:Name="Table" Width="970" Height="547" ClipToBounds="True">
                             <Canvas.Background>
-                                <ImageBrush ImageSource="/UI/Assets/Resources/table.png"/>
+                                <ImageBrush ImageSource="/Resources\Images\table.png"/>
                             </Canvas.Background>
                             <Canvas.OpacityMask>
-                                <ImageBrush ImageSource="/UI/Assets/Resources/table_mask.png"/>
+                                <ImageBrush ImageSource="/Resources\Images\table_mask.png"/>
                             </Canvas.OpacityMask>
                         </Canvas>
                         <Image x:Name="Overlay" Width="970" Height="547" Stretch="None"/>
                     </Canvas>
                     <Canvas Height="547" Width="200">
-                        <Image Source="/UI/Assets/Resources/capsule.png" Panel.ZIndex="2" Height="547"/>
+                        <Image Source="/Resources\Images\capsule.png" Panel.ZIndex="2" Height="547"/>
                         <Canvas x:Name="Full" Width="200" Height="547" Panel.ZIndex="1"/>
                     </Canvas>
                 </TabPanel>
             </Button>
-            <Image x:Name="Queue" Source="/UI/Assets/Resources/queue.png" Width="200" Height="200" IsHitTestVisible="False" />
+            <Image x:Name="Queue" Source="/Resources\Images\queue.png" Width="200" Height="200" IsHitTestVisible="False" />
         </Grid>
     </Grid>
 </Window>
