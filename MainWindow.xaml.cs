@@ -1,24 +1,13 @@
 ﻿using PoolEight.Render;
 using PoolEight.Physics;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using PoolEight.Utilities;
 using PoolEight.Physics.Events.Triggers;
-using Microsoft.VisualBasic;
-using static System.Formats.Asn1.AsnWriter;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -33,15 +22,14 @@ namespace PoolEight
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private readonly Renderer renderer;
-        private readonly PhysicsEngine physicsEngine;
+        private readonly Queue<double> fpsDeltas = new Queue<double>(new double[8]);
 
         private long t = DateTime.Now.Ticks / 10000;
 
+        private readonly PhysicsEngine physicsEngine;
+        private readonly Renderer renderer;
+
         private int miss = 0;
-
-
-        private readonly Queue<double> fpsDeltas = new Queue<double>(new double[8]);
 
         private string fps;
         public string FPS
@@ -55,6 +43,18 @@ namespace PoolEight
                     OnPropertyChanged();
                 }
             }
+        }
+
+        public MainWindow()
+        {
+            CompositionTarget.Rendering += Update;
+
+            InitializeComponent();
+            physicsEngine = new PhysicsEngine();
+            physicsEngine.Trigger += Trigger;
+
+            renderer = new Renderer(Table, Half, Full, Queue, Overlay);
+            renderer.ResetAll(physicsEngine.balls);
         }
 
         #region Gameloop
@@ -103,16 +103,32 @@ namespace PoolEight
         }
         #endregion
 
-        public MainWindow()
+        #region Gameeventhandlers and utitilies
+        private void Won()
         {
-            CompositionTarget.Rendering += Update;
+            //renderer.Show(WonHelper, true);
+        }
 
-            InitializeComponent();
-            physicsEngine = new PhysicsEngine();
-            physicsEngine.Trigger += Trigger;
+        private void Lost()
+        {
+            //renderer.Show(LooseScreen, true);
+        }
 
-            renderer = new Renderer(Table, Half, Full, Queue, Overlay);
-            renderer.ResetAll(physicsEngine.balls);
+        private int CalculateScore()
+        {
+            int sum = 0;
+
+            for (int i = 0; i < Math.Min(physicsEngine.HalfBalls.Count, physicsEngine.FullBalls.Count); i++)
+            {
+                sum += physicsEngine.HalfBalls[i].index * physicsEngine.FullBalls[i].index;
+            }
+
+            for (int i = 1; i < miss; i++)
+            {
+                sum -= 2 * i;
+            }
+
+            return sum;
         }
 
         private void HitBall(object sender, RoutedEventArgs e)
@@ -144,11 +160,11 @@ namespace PoolEight
 
             if (physicsEngine.balls.Count == 2)
             {
-                //Won();
+                Won();
             }
             else if (e.ball.index == 8)
             {
-               // Lost();
+                Lost();
             }
 
             PBallWithG newBall = new PBallWithG(e.ball.index, 20, new Vector2D(100, 100), e.ball.velocity);
@@ -157,5 +173,6 @@ namespace PoolEight
             renderer.AddSideBall(newBall);
             renderer.RemoveBall(e.ball);
         }
+        #endregion
     }
 }
