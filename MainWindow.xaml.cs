@@ -1,28 +1,23 @@
-﻿using PoolEight.Render;
-using PoolEight.Physics;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
+using PoolEight.Render;
+using PoolEight.Physics;
 using PoolEight.Utilities;
-using PoolEight.Physics.Events.Triggers;
+using System.Windows.Media;
+using System.Windows.Input;
 using System.ComponentModel;
+using System.Collections.Generic;
+using PoolEight.Physics.Events.Triggers;
 using System.Runtime.CompilerServices;
 
 namespace PoolEight
 {
-
     public partial class MainWindow : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         private readonly Queue<double> fpsDeltas = new Queue<double>(new double[8]);
+        
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private long t = DateTime.Now.Ticks / 10000;
 
@@ -43,6 +38,11 @@ namespace PoolEight
                     OnPropertyChanged();
                 }
             }
+        }
+
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public MainWindow()
