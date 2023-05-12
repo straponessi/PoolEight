@@ -1,0 +1,42 @@
+C:\Users\lastr\Desktop\Solution\PoolEight\bin\Debug\net6.0-windows\PoolEight.exe
+C:\Users\lastr\Desktop\Solution\PoolEight\bin\Debug\net6.0-windows\PoolEight.deps.json
+C:\Users\lastr\Desktop\Solution\PoolEight\bin\Debug\net6.0-windows\PoolEight.runtimeconfig.json
+C:\Users\lastr\Desktop\Solution\PoolEight\bin\Debug\net6.0-windows\PoolEight.dll
+C:\Users\lastr\Desktop\Solution\PoolEight\bin\Debug\net6.0-windows\PoolEight.pdb
+C:\Users\lastr\Desktop\Solution\PoolEight\obj\Debug\net6.0-windows\PoolEight.csproj.AssemblyReference.cache
+C:\Users\lastr\Desktop\Solution\PoolEight\obj\Debug\net6.0-windows\App.g.cs
+C:\Users\lastr\Desktop\Solution\PoolEight\obj\Debug\net6.0-windows\PoolEight_MarkupCompile.cache
+C:\Users\lastr\Desktop\Solution\PoolEight\obj\Debug\net6.0-windows\PoolEight_MarkupCompile.lref
+C:\Users\lastr\Desktop\Solution\PoolEight\obj\Debug\net6.0-windows\PoolEight.g.resources
+C:\Users\lastr\Desktop\Solution\PoolEight\obj\Debug\net6.0-windows\PoolEight.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lastr\Desktop\Solution\PoolEight\obj\Debug\net6.0-windows\PoolEight.AssemblyInfoInputs.cache
+C:\Users\lastr\Desktop\Solution\PoolEight\obj\Debug\net6.0-windows\PoolEight.AssemblyInfo.cs
+C:\Users\lastr\Desktop\Solution\PoolEight\obj\Debug\net6.0-windows\PoolEight.csproj.CoreCompileInputs.cache
+C:\Users\lastr\Desktop\Solution\PoolEight\obj\Debug\net6.0-windows\PoolEight.dll
+C:\Users\lastr\Desktop\Solution\PoolEight\obj\Debug\net6.0-windows\refint\PoolEight.dll
+C:\Users\lastr\Desktop\Solution\PoolEight\obj\Debug\net6.0-windows\PoolEight.pdb
+C:\Users\lastr\Desktop\Solution\PoolEight\obj\Debug\net6.0-windows\PoolEight.genruntimeconfig.cache
+C:\Users\lastr\Desktop\Solution\PoolEight\obj\Debug\net6.0-windows\ref\PoolEight.dll
+C:\Users\lastr\Desktop\Solution\PoolEight\obj\Debug\net6.0-windows\UI\MainWindow.g.cs
+C:\Users\lastr\Desktop\Solution\PoolEight\obj\Debug\net6.0-windows\UI\MainWindow.baml
+C:\Users\lastr\Desktop\Solution\My codes\PoolEight\bin\Debug\net6.0-windows\PoolEight.exe
+C:\Users\lastr\Desktop\Solution\My codes\PoolEight\bin\Debug\net6.0-windows\PoolEight.deps.json
+C:\Users\lastr\Desktop\Solution\My codes\PoolEight\bin\Debug\net6.0-windows\PoolEight.runtimeconfig.json
+C:\Users\lastr\Desktop\Solution\My codes\PoolEight\bin\Debug\net6.0-windows\PoolEight.dll
+C:\Users\lastr\Desktop\Solution\My codes\PoolEight\bin\Debug\net6.0-windows\PoolEight.pdb
+C:\Users\lastr\Desktop\Solution\My codes\PoolEight\obj\Debug\net6.0-windows\PoolEight.csproj.AssemblyReference.cache
+C:\Users\lastr\Desktop\Solution\My codes\PoolEight\obj\Debug\net6.0-windows\MainWindow.g.cs
+C:\Users\lastr\Desktop\Solution\My codes\PoolEight\obj\Debug\net6.0-windows\App.g.cs
+C:\Users\lastr\Desktop\Solution\My codes\PoolEight\obj\Debug\net6.0-windows\PoolEight_MarkupCompile.cache
+C:\Users\lastr\Desktop\Solution\My codes\PoolEight\obj\Debug\net6.0-windows\PoolEight_MarkupCompile.lref
+C:\Users\lastr\Desktop\Solution\My codes\PoolEight\obj\Debug\net6.0-windows\MainWindow.baml
+C:\Users\lastr\Desktop\Solution\My codes\PoolEight\obj\Debug\net6.0-windows\PoolEight.g.resources
+C:\Users\lastr\Desktop\Solution\My codes\PoolEight\obj\Debug\net6.0-windows\PoolEight.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lastr\Desktop\Solution\My codes\PoolEight\obj\Debug\net6.0-windows\PoolEight.AssemblyInfoInputs.cache
+C:\Users\lastr\Desktop\Solution\My codes\PoolEight\obj\Debug\net6.0-windows\PoolEight.AssemblyInfo.cs
+C:\Users\lastr\Desktop\Solution\My codes\PoolEight\obj\Debug\net6.0-windows\PoolEight.csproj.CoreCompileInputs.cache
+C:\Users\lastr\Desktop\Solution\My codes\PoolEight\obj\Debug\net6.0-windows\PoolEight.dll
+C:\Users\lastr\Desktop\Solution\My codes\PoolEight\obj\Debug\net6.0-windows\refint\PoolEight.dll
+C:\Users\lastr\Desktop\Solution\My codes\PoolEight\obj\Debug\net6.0-windows\PoolEight.pdb
+C:\Users\lastr\Desktop\Solution\My codes\PoolEight\obj\Debug\net6.0-windows\PoolEight.genruntimeconfig.cache
+C:\Users\lastr\Desktop\Solution\My codes\PoolEight\obj\Debug\net6.0-windows\ref\PoolEight.dll
