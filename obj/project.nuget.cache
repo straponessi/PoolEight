@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "RtBjB8Q8duHlb6iYTmaVh1i3ebE7sIV9yOChAsu59oTOkc0MPNw/ArRfWRLiLEaye5Kt01nPCLff/WxhTxqg/A==",
+  "dgSpecHash": "hG+J0GupN8cLEhUPSFS+mzcBt8GB8z5+Ma0WBCvoJ66qZXbgrzzqYHW0OxQFWS2WCS2vlfy9uEQrSShiLl+6Ww==",
   "success": true,
   "projectFilePath": "C:\\Users\\lastr\\Desktop\\Solution\\My codes\\PoolEight\\PoolEight.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\lastr\\.nuget\\packages\\materialdesigncolors\\2.1.4\\materialdesigncolors.2.1.4.nupkg.sha512",
+    "C:\\Users\\lastr\\.nuget\\packages\\materialdesignthemes\\4.9.0\\materialdesignthemes.4.9.0.nupkg.sha512",
+    "C:\\Users\\lastr\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.39\\microsoft.xaml.behaviors.wpf.1.1.39.nupkg.sha512"
+  ],
   "logs": []
 }

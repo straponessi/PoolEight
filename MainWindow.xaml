@@ -3,6 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+       
         xmlns:local="clr-namespace:PoolEight"
         mc:Ignorable="d"
         Height="1080" Width="1920" 
@@ -64,5 +66,55 @@
             </Button>
             <Image x:Name="Queue" Source="/Resources\Images\queue.png" Width="200" Height="200" IsHitTestVisible="False" />
         </Grid>
+
+        <materialDesign:Card Width="970" VerticalAlignment="Top" Margin="0, 16">
+            <DockPanel>
+                <Button Style="{StaticResource MaterialDesignFlatButton}"  Click="RestartGame" Margin="8, 0, 8, 0">Restart</Button>
+                <Button Click="OpenHighscore" Style="{StaticResource MaterialDesignFlatButton}">Highscores</Button>
+                <DockPanel HorizontalAlignment="Right">
+                    <Button Click="CloseApplication" Style="{StaticResource MaterialDesignFlatButton}">
+                        <materialDesign:PackIcon Kind="ExitToApp"/>
+                    </Button>
+                </DockPanel>
+            </DockPanel>
+        </materialDesign:Card>
+        <materialDesign:Card HorizontalAlignment="Center" Visibility="Hidden" IsHitTestVisible="False" VerticalAlignment="Center" Padding="16" x:Name="LooseScreen">
+            <StackPanel>
+                <TextBlock Margin="32,16" Style="{StaticResource MaterialDesignHeadline6TextBlock}">Забит чёрный шар</TextBlock>
+                <Button Click="RestartGame">
+                    Restart
+                </Button>
+            </StackPanel>
+        </materialDesign:Card>
+        <materialDesign:Card IsHitTestVisible="False" HorizontalAlignment="Center" Visibility="Hidden"  VerticalAlignment="Center" Padding="16" x:Name="WonHelper">
+            <StackPanel Margin="32,16">
+                <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}">Победа!</TextBlock>
+                <TextBox Margin="0, 16, 0, 0" Style="{StaticResource MaterialDesignComboBoxEditableTextBox}" x:Name="PlayerName">Введите имя...</TextBox>
+                <Button Margin="0, 16, 0, 0" Click="SendHighscoreAndRestart">Сохранить счёт и перезапустить</Button>
+            </StackPanel>
+        </materialDesign:Card>
+        <materialDesign:Card Visibility="Hidden" IsHitTestVisible="False" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="Highscore">
+            <StackPanel Width="500">
+                <DockPanel Margin="16">
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource MaterialDesignHeadline6TextBlock}">Highscores</TextBlock>
+                    <Button VerticalAlignment="Center" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Right" Click="CloseHighscore">
+                        <materialDesign:PackIcon Kind="Close" />
+                    </Button>
+                </DockPanel>
+                <DataGrid Style="{StaticResource MaterialDesignDataGrid}" ItemsSource="{Binding}" x:Name="Scores" AutoGenerateColumns="False" AllowDrop="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
+                        <DataGridTextColumn SortDirection="Descending" Header="Счёт" Binding="{Binding Points}" />
+                        <DataGridTextColumn Header="Дата" Binding="{Binding Date}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+                <TextBlock Style="{StaticResource MaterialDesignBody1TextBlock}" TextWrapping="Wrap" Margin="16" x:Name="HighScores" />
+            </StackPanel>
+        </materialDesign:Card>
+        
+        <materialDesign:Card VerticalAlignment="Bottom" HorizontalAlignment="Center" IsHitTestVisible="False" Margin="0, 16">
+            <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Foreground="{StaticResource PrimaryHueMidBrush}" Padding="16" FontSize="20" Width="200" TextAlignment="Center" Text="{Binding Path=Score, Mode=OneWay}" />
+        </materialDesign:Card>
+        
     </Grid>
 </Window>

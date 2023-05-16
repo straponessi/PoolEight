@@ -240,12 +240,6 @@ namespace PoolEight.Render
             element.Visibility = Visibility.Visible;
             if (hitTest) element.IsHitTestVisible = true;
         }
-
-        public void ToggleVisibility(FrameworkElement element, bool hitTest = false)
-        {
-            element.Visibility = element.Visibility == Visibility.Visible ? Visibility.Hidden : Visibility.Visible;
-            if (hitTest) element.IsHitTestVisible = element.Visibility != Visibility.Visible;
-        }
         #endregion
     }
 }

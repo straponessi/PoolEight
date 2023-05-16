@@ -34,6 +34,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="MaterialDesignThemes" Version="4.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Resources\Images\0.jpg" />
     <Resource Include="Resources\Images\1.jpg" />
     <Resource Include="Resources\Images\10.jpg" />

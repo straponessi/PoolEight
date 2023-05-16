@@ -15,46 +15,31 @@ namespace PoolEight
 {
     public partial class MainWindow : INotifyPropertyChanged
     {
-        private readonly Queue<double> fpsDeltas = new Queue<double>(new double[8]);
-        
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private long t = DateTime.Now.Ticks / 10000;
-
         private readonly PhysicsEngine physicsEngine;
         private readonly Renderer renderer;
 
         private int miss = 0;
 
-        private string fps;
-        public string FPS
+        private long t = DateTime.Now.Ticks / 10000;
+
+        private string score;
+        public string Score
         {
-            get { return fps; }
+            get { return score; }
             set
             {
-                if (fps != value)
+                if (score != value)
                 {
-                    fps = value;
+                    score = value;
                     OnPropertyChanged();
                 }
             }
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public MainWindow()
-        {
-            CompositionTarget.Rendering += Update;
-
-            InitializeComponent();
-            physicsEngine = new PhysicsEngine();
-            physicsEngine.Trigger += Trigger;
-
-            renderer = new Renderer(Table, Half, Full, Queue, Overlay);
-            renderer.ResetAll(physicsEngine.balls);
         }
 
         #region Gameloop
@@ -67,25 +52,20 @@ namespace PoolEight
 
         private void UpdateUI()
         {
-            fpsDeltas.Dequeue();
-            fpsDeltas.Enqueue(1000.0d / (DateTime.Now.Ticks / 10000 - t));
-
-            FPS = Math.Round(fpsDeltas.Sum() / 8).ToString() + " FPS";
-
-            //Score = "Punkte: " + CalculateScore();
+            Score = "Счёт: " + CalculateScore();
         }
 
-        private void UpdatePhysics()
-        {
-            long nextT = DateTime.Now.Ticks / 10000;
-            for (long i = t; i < nextT; i += 8)
-            {
-                physicsEngine.Step(0.008);
-                if (nextT - i > 500) break;
-            }
-
-            t = DateTime.Now.Ticks / 10000;
-        }
+       private void UpdatePhysics()
+       {
+          long nextT = DateTime.Now.Ticks / 10000;
+          for (long i = t; i < nextT; i += 8)
+          {
+              physicsEngine.Step(0.008);
+              if (nextT - i > 500) break;
+          }
+    
+          t = DateTime.Now.Ticks / 10000;
+       }
 
         private void UpdateRenderer()
         {
@@ -106,12 +86,12 @@ namespace PoolEight
         #region Gameeventhandlers and utitilies
         private void Won()
         {
-            //renderer.Show(WonHelper, true);
+            renderer.Show(WonHelper, true);
         }
 
         private void Lost()
         {
-            //renderer.Show(LooseScreen, true);
+            renderer.Show(LooseScreen, true);
         }
 
         private int CalculateScore()
@@ -174,5 +154,55 @@ namespace PoolEight
             renderer.RemoveBall(e.ball);
         }
         #endregion
+
+        #region UIEventhandlers
+        private void RestartGame(object sender = null, RoutedEventArgs e = null)
+        {
+            renderer.Hide(LooseScreen);
+            miss = 0;
+            physicsEngine.Init();
+            renderer.ResetAll(physicsEngine.balls);
+        }
+
+        private void OpenHighscore(object sender, RoutedEventArgs e)
+        {
+            renderer.Show(Highscore, true);
+
+            Scores.ItemsSource = ScoreManager.Scores;
+        }
+
+        private void CloseHighscore(object sender, RoutedEventArgs e)
+        {
+            renderer.Hide(Highscore, true);
+        }
+
+        private void CloseApplication(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void SendHighscoreAndRestart(object sender, RoutedEventArgs e)
+        {
+            ScoreManager.SaveScore(PlayerName.Text, CalculateScore());
+            RestartGame();
+            WonHelper.Visibility = Visibility.Hidden;
+            WonHelper.IsHitTestVisible = false;
+        }
+
+        #endregion
+
+        public MainWindow()
+        {
+            DataContext = this;
+            InitializeComponent();
+            CompositionTarget.Rendering += Update;
+
+
+            physicsEngine = new PhysicsEngine();
+            physicsEngine.Trigger += Trigger;
+
+            renderer = new Renderer(Table, Half, Full, Queue, Overlay);
+            renderer.ResetAll(physicsEngine.balls);
+        }
     }
 }
