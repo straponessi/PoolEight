@@ -43,51 +43,6 @@ namespace PoolEight.Render.Effects
             UpdateShaderValue(IntensityProperty);
         }
 
-        public Brush Input
-        {
-            get
-            {
-                return (Brush)GetValue(InputProperty);
-            }
-            set
-            {
-                SetValue(InputProperty, value);
-            }
-        }
-
-        public Point3D Rot0
-        {
-            get
-            {
-                return (Point3D)GetValue(Rot0Property);
-            }
-            set
-            {
-                SetValue(Rot0Property, value);
-            }
-        }
-        public Point3D Rot1
-        {
-            get
-            {
-                return (Point3D)GetValue(Rot1Property);
-            }
-            set
-            {
-                SetValue(Rot1Property, value);
-            }
-        }
-        public Point3D Rot2
-        {
-            get
-            {
-                return (Point3D)GetValue(Rot2Property);
-            }
-            set
-            {
-                SetValue(Rot2Property, value);
-            }
-        }
         public Point Size
         {
             get
@@ -109,18 +64,6 @@ namespace PoolEight.Render.Effects
             set
             {
                 SetValue(RadiusProperty, value);
-            }
-        }
-
-        public Point3D Position
-        {
-            get
-            {
-                return (Point3D)GetValue(PositionProperty);
-            }
-            set
-            {
-                SetValue(PositionProperty, value);
             }
         }
 

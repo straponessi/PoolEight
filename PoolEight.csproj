@@ -55,10 +55,7 @@
     <Resource Include="Resources\Images\8.jpg" />
     <Resource Include="Resources\Images\9.jpg" />
     <Resource Include="Resources\Images\capsule.png" />
-    <Resource Include="Resources\Images\cubemap.jpg" />
-    <Resource Include="Resources\Images\logo.png" />
     <Resource Include="Resources\Images\queue.png" />
-    <Resource Include="Resources\Images\splashscreen.png" />
     <Resource Include="Resources\Images\table.png" />
     <Resource Include="Resources\Images\table_mask.png" />
   </ItemGroup>

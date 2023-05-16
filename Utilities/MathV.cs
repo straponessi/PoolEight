@@ -24,27 +24,9 @@ namespace PoolEight.Utilities
             return a.x * b.x + a.y * b.y;
         }
 
-        public static double NDot(Vector2D a, Vector2D b)
-        {
-            return a.x * b.x - a.y * b.y;
-        }
-
         public static Vector2D Max(Vector2D v, double d)
         {
             return new Vector2D(Math.Max(v.x, d), Math.Max(v.y, d));
-        }
-
-        public static Vector2D Min(Vector2D v, float d)
-        {
-            return new Vector2D(Math.Min(v.x, d), Math.Min(v.y, d));
-        }
-
-        public static Vector2D Max(Vector2D a, Vector2D b)
-        {
-            return new Vector2D(
-                Math.Max(a.x, b.x),
-                Math.Max(a.y, b.y)
-            );
         }
 
         public static Vector2D Min(Vector2D a, Vector2D b)

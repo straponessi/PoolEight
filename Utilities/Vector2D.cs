@@ -20,23 +20,6 @@ namespace PoolEight.Utilities
             y = _xy;
         }
 
-        public Vector2D()
-        {
-            x = 0;
-            y = 0;
-        }
-
-        public void Deconstruct(out double _x, out double _y)
-        {
-            _x = x;
-            _y = y;
-        }
-
-        public override string ToString()
-        {
-            return $"x: {x}, y: {y}";
-        }
-
         public Vector2D Normalize() => this / Length;
 
         public double Length
@@ -47,11 +30,6 @@ namespace PoolEight.Utilities
         public double SquaredLength
         {
             get { return x * x + y * y; }
-        }
-
-        public bool Zero
-        {
-            get { return x == 0 && y == 0; }
         }
 
         // +- Vector2D
