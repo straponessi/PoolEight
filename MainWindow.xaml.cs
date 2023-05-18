@@ -22,6 +22,9 @@ namespace PoolEight
 
         private long t = DateTime.Now.Ticks / 10000;
 
+        private string Player1;
+        private string Player2;
+
         private string score;
         public string Score
         {
@@ -52,10 +55,10 @@ namespace PoolEight
 
         private void UpdateUI()
         {
-            Score = "Счёт: " + CalculateScore();
+            Score = $"{Player1}\tСчёт:" + CalculateScore() + $"\n{Player2}\tСчёт:" + CalculateScore();
         }
 
-       private void UpdatePhysics()
+        private void UpdatePhysics()
        {
           long nextT = DateTime.Now.Ticks / 10000;
           for (long i = t; i < nextT; i += 8)
@@ -156,6 +159,19 @@ namespace PoolEight
         #endregion
 
         #region UIEventhandlers
+        private void LetsPlay(object sender, RoutedEventArgs e)
+        {
+            Player1 = firstPlayer.Text;
+            Player2 = secondPlayer.Text;
+
+            renderer.Show(PlayerBoard, true);
+            renderer.Show(TopPanel, true);
+
+            CompositionTarget.Rendering += Update;
+            renderer.ResetAll(physicsEngine.balls);
+            identification.Visibility = Visibility.Hidden;
+        }
+
         private void RestartGame(object sender = null, RoutedEventArgs e = null)
         {
             renderer.Hide(LooseScreen);
@@ -183,7 +199,7 @@ namespace PoolEight
 
         private void SendHighscoreAndRestart(object sender, RoutedEventArgs e)
         {
-            ScoreManager.SaveScore(PlayerName.Text, CalculateScore());
+            ScoreManager.SaveScore(Player1, CalculateScore(), Player2, CalculateScore());
             RestartGame();
             WonHelper.Visibility = Visibility.Hidden;
             WonHelper.IsHitTestVisible = false;
@@ -195,14 +211,19 @@ namespace PoolEight
         {
             DataContext = this;
             InitializeComponent();
-            CompositionTarget.Rendering += Update;
-
 
             physicsEngine = new PhysicsEngine();
             physicsEngine.Trigger += Trigger;
 
             renderer = new Renderer(Table, Half, Full, Queue, Overlay);
-            renderer.ResetAll(physicsEngine.balls);
+        }
+
+        private void Play(object sender, RoutedEventArgs e)
+        {
+
+            renderer.Hide(PlayBtn, true);
+            renderer.Show(identification, true);
+            btnRestart.Visibility = Visibility.Visible;
         }
     }
 }
