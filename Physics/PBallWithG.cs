@@ -1,6 +1,6 @@
-﻿using PoolEight.Utilities;
+﻿using Utilities;
 
-namespace PoolEight.Physics
+namespace Physics
 {
     class PBallWithG : PBall
     {

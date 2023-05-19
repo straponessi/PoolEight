@@ -1,12 +1,10 @@
 ﻿using System;
 
-namespace PoolEight.Physics.Events
+namespace Physics.Events.Triggers
 {
-    namespace Triggers
-    {
-        class TriggerEvent : EventArgs
-        {
-            public PBall ball;
-        }
-    }
+   class TriggerEvent : EventArgs
+   {
+       public PBall ball;
+   }
+  
 }

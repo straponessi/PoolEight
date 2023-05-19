@@ -1,7 +1,7 @@
-﻿using PoolEight.Utilities;
+﻿using Utilities;
 using System.Collections.Generic;
 
-namespace PoolEight.Physics.Colliders
+namespace Physics.Colliders
 {
     class LodGroup
     {

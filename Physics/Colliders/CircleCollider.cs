@@ -1,6 +1,6 @@
-﻿using PoolEight.Utilities;
+﻿using Utilities;
 
-namespace PoolEight.Physics.Colliders
+namespace Physics.Colliders
 {
     class CircleCollider : Collider
     {

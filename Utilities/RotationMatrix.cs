@@ -1,7 +1,7 @@
 ﻿using static System.Math;
 using System.Windows.Media.Media3D;
 
-namespace PoolEight.Utilities
+namespace Utilities
 {
     class RotationMatrix
     {

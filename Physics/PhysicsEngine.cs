@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using PoolEight.Physics.Prefabs;
-using PoolEight.Physics.Triggers;
-using PoolEight.Physics.Collisions;
-using PoolEight.Utilities;
-using PoolEight.Physics.Events.Triggers;
+using Physics.Prefabs;
+using Physics.Triggers;
+using Physics.Collisions;
+using Utilities;
+using Physics.Events.Triggers;
 
-namespace PoolEight.Physics
+namespace Physics
 {
     class PhysicsEngine
     {

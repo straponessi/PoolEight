@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using PoolEight.Physics;
+using Physics;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,10 +7,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Windows.Shapes;
-using PoolEight.Utilities;
-using PoolEight.Render.Effects;
+using Utilities;
+using Render.Effects;
 
-namespace PoolEight.Render
+namespace Render
 {
     class Renderer
     {

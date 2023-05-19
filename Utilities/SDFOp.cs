@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PoolEight.Utilities
+namespace Utilities
 {
     static class SDFOp
     {

@@ -1,4 +1,4 @@
-﻿namespace PoolEight.Physics.Colliders
+﻿namespace Physics.Colliders
 {
     public enum ColliderMode
     {

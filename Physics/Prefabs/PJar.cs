@@ -1,7 +1,7 @@
-﻿using PoolEight.Physics.Colliders;
-using PoolEight.Utilities;
+﻿using Physics.Colliders;
+using Utilities;
 
-namespace PoolEight.Physics.Prefabs
+namespace Physics.Prefabs
 {
     class PJar : PStaticObject
     {

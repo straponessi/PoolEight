@@ -1,8 +1,8 @@
-﻿using PoolEight.Physics.Colliders;
-using PoolEight.Utilities;
+﻿using Physics.Colliders;
+using Utilities;
 using System.Collections.Generic;
 
-namespace PoolEight.Physics
+namespace Physics
 {
     class PStaticObject
     {

@@ -1,7 +1,7 @@
-﻿using PoolEight.Utilities;
+﻿using Utilities;
 using System;
 
-namespace PoolEight.Physics.Colliders
+namespace Physics.Colliders
 {
     class IsoscelesTriangleCollider : Collider
     {

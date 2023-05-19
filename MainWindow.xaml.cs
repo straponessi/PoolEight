@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
-using PoolEight.Render;
-using PoolEight.Physics;
-using PoolEight.Utilities;
+using Render;
+using Physics;
+using Utilities;
 using System.Windows.Media;
 using System.Windows.Input;
 using System.ComponentModel;
 using System.Collections.Generic;
-using PoolEight.Physics.Events.Triggers;
+using Physics.Events.Triggers;
 using System.Runtime.CompilerServices;
 
 namespace PoolEight

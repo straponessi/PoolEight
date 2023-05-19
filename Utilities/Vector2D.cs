@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Media.Media3D;
 
-namespace PoolEight.Utilities
+namespace Utilities
 {
     class Vector2D
     {

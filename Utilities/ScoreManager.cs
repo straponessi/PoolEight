@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Text.Json;
 
-namespace PoolEight.Utilities
+namespace Utilities
 {
     class Record
     {

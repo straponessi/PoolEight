@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Media.Imaging;
-using PoolEight.Utilities;
+using Utilities;
 
-namespace PoolEight.Physics
+namespace Physics
 {
     class PBall : PDynamicObject
     {

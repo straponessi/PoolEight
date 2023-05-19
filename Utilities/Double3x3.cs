@@ -1,4 +1,4 @@
-﻿namespace PoolEight.Utilities
+﻿namespace Utilities
 {
     class Double3x3
     {
