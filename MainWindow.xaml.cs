@@ -10,6 +10,7 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using Physics.Events.Triggers;
 using System.Runtime.CompilerServices;
+using GameRules;
 
 namespace PoolEight
 {
@@ -22,8 +23,15 @@ namespace PoolEight
 
         private long t = DateTime.Now.Ticks / 10000;
 
-        private string Player1;
-        private string Player2;
+        Player[] players = new[]
+        {
+           new Player{ },
+           new Player{ }
+        };
+        int turn = 0;
+        //Player player1 = new Player();
+        //Player player2 = new Player();
+
 
         private string score;
         public string Score
@@ -55,20 +63,23 @@ namespace PoolEight
 
         private void UpdateUI()
         {
-            Score = $"{Player1}\tСчёт:" + CalculateScore() + $"\n{Player2}\tСчёт:" + CalculateScore();
+            //     CalculateScore(players[0], players[1]);
+            Score = $"{players[0].Name}\tСчёт:{players[0].Score}" + "\nХодит\t"
+                + players[turn].Name
+                + $"\n{players[1].Name}\tСчёт:{players[1].Score}\t" + $"{physicsEngine.FullBalls.Count}" + $"{physicsEngine.HalfBalls.Count}";
         }
 
         private void UpdatePhysics()
-       {
-          long nextT = DateTime.Now.Ticks / 10000;
-          for (long i = t; i < nextT; i += 8)
-          {
-              physicsEngine.Step(0.008);
-              if (nextT - i > 500) break;
-          }
-    
-          t = DateTime.Now.Ticks / 10000;
-       }
+        {
+            long nextT = DateTime.Now.Ticks / 10000;
+            for (long i = t; i < nextT; i += 8)
+            {
+                physicsEngine.Step(0.008);
+                if (nextT - i > 500) break;
+            }
+
+            t = DateTime.Now.Ticks / 10000;
+        }
 
         private void UpdateRenderer()
         {
@@ -97,22 +108,40 @@ namespace PoolEight
             renderer.Show(LooseScreen, true);
         }
 
-        private int CalculateScore()
-        {
-            int sum = 0;
 
-            for (int i = 0; i < Math.Min(physicsEngine.HalfBalls.Count, physicsEngine.FullBalls.Count); i++)
-            {
-                sum += physicsEngine.HalfBalls[i].index * physicsEngine.FullBalls[i].index;
-            }
-
-            for (int i = 1; i < miss; i++)
-            {
-                sum -= 2 * i;
-            }
-
-            return sum;
-        }
+        // private (int, int) CalculateScore(Player player1, Player player2)
+        // {
+        //     if (turn == 0)
+        //     {
+        //         int sum = 0;
+        //         for (int i = 0; i < physicsEngine.FullBalls.Count; i++)
+        //         {
+        //             sum += physicsEngine.FullBalls[i].index;
+        //             player1.Score += sum;
+        //         }
+        //         if (miss == 1)
+        //         {
+        //             player1.Score -= 2;
+        //             turn = 1;
+        //         }
+        //     }
+        //     if(turn == 1)
+        //     {
+        //         int sum = 0;
+        //         for (int i = 0; i < physicsEngine.HalfBalls.Count; i++)
+        //         {
+        //             sum += physicsEngine.HalfBalls[i].index;
+        //             player2.Score += sum;
+        //         }
+        //         if (miss == 0)
+        //         {
+        //             player2.Score -= 2;
+        //             turn = 0;
+        //         }
+        //     }
+        //     return(player1.Score, player2.Score);
+        //     
+        // }
 
         private void HitBall(object sender, RoutedEventArgs e)
         {
@@ -137,7 +166,16 @@ namespace PoolEight
             {
                 e.ball.velocity = new Vector2D(0, 0);
                 e.ball.position = new Vector2D(273, 547 / 2);
-                miss++;
+                if (miss == 0)
+                {
+                    miss = 1;
+                }
+                else if (miss == 1)
+                {
+                    miss = 0;
+                }
+
+                //     miss++;
                 return;
             }
 
@@ -149,6 +187,11 @@ namespace PoolEight
             {
                 Lost();
             }
+            else if (e.ball.index < 8)
+                players[0].Score ++;
+            else if (e.ball.index > 8)
+                players[1].Score++;
+
 
             PBallWithG newBall = new PBallWithG(e.ball.index, 20, new Vector2D(100, 100), e.ball.velocity);
 
@@ -161,8 +204,8 @@ namespace PoolEight
         #region UIEventhandlers
         private void LetsPlay(object sender, RoutedEventArgs e)
         {
-            Player1 = firstPlayer.Text;
-            Player2 = secondPlayer.Text;
+            players[0].Name = firstPlayer.Text;
+            players[1].Name = secondPlayer.Text;
 
             renderer.Show(PlayerBoard, true);
             renderer.Show(TopPanel, true);
@@ -172,8 +215,17 @@ namespace PoolEight
             identification.Visibility = Visibility.Hidden;
         }
 
+        private void Play(object sender, RoutedEventArgs e)
+        {
+            renderer.Hide(PlayBtn, true);
+            renderer.Show(identification, true);
+        }
+
         private void RestartGame(object sender = null, RoutedEventArgs e = null)
         {
+            players[0].Score = 0;
+            players[1].Score = 0;
+
             renderer.Hide(LooseScreen);
             miss = 0;
             physicsEngine.Init();
@@ -199,10 +251,10 @@ namespace PoolEight
 
         private void SendHighscoreAndRestart(object sender, RoutedEventArgs e)
         {
-            ScoreManager.SaveScore(Player1, CalculateScore(), Player2, CalculateScore());
+            ScoreManager.SaveScore(players[0], players[1]);
+
             RestartGame();
             WonHelper.Visibility = Visibility.Hidden;
-            WonHelper.IsHitTestVisible = false;
         }
 
         #endregion
@@ -216,14 +268,6 @@ namespace PoolEight
             physicsEngine.Trigger += Trigger;
 
             renderer = new Renderer(Table, Half, Full, Queue, Overlay);
-        }
-
-        private void Play(object sender, RoutedEventArgs e)
-        {
-
-            renderer.Hide(PlayBtn, true);
-            renderer.Show(identification, true);
-            btnRestart.Visibility = Visibility.Visible;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameRules;
+using System;
 using System.Collections.ObjectModel;
 using System.Text.Json;
 
@@ -33,9 +34,9 @@ namespace Utilities
             }
         }
 
-        public static void SaveScore(string player1, int score1, string player2, int score2)
+        public static void SaveScore(Player player1, Player player2)
         {
-            Scores.Add(new Record() { Player1 = player1, Points1 = score1, Player2 = player2, Points2 = score2, Date = DateTime.Now });
+            Scores.Add(new Record() { Player1 = player1.Name, Points1 = player1.Score, Player2 = player2.Name, Points2 = player2.Score, Date = DateTime.Now });
 
             System.IO.File.WriteAllText(path, JsonSerializer.Serialize(Scores));
         }
