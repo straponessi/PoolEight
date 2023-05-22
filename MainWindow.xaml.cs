@@ -30,7 +30,6 @@ namespace PoolEight
         };
         private int turn = 0;
 
-
         private string score;
         public string Score
         {
@@ -65,6 +64,11 @@ namespace PoolEight
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        private bool isHit = false;
+        private bool isTriggered = false;
+        private bool hueputalo = false;
+
+
         #region Gameloop
         private void Update(object sender, EventArgs e)
         {
@@ -75,11 +79,8 @@ namespace PoolEight
 
         private void UpdateUI()
         {
-
             renderer.Show(HitTurn);
-            SwitchTurn();
-
-            Score = $"{players[0].Name}\tСчёт:{players[0].Score}" 
+            Score = $"{players[0].Name}\tСчёт:{players[0].Score}"
                 + $"\n{players[1].Name}\tСчёт:{players[1].Score}\t";
         }
 
@@ -88,8 +89,8 @@ namespace PoolEight
             long nextT = DateTime.Now.Ticks / 10000;
             for (long i = t; i < nextT; i += 8)
             {
-               physicsEngine.Step(0.008);
-               if (nextT - i > 500) break;
+                physicsEngine.Step(0.008);
+                if (nextT - i > 500) break;
             }
 
             t = DateTime.Now.Ticks / 10000;
@@ -107,7 +108,11 @@ namespace PoolEight
 
                 renderer.DrawQueue(ballPosition, ballRadius, p);
                 renderer.DrawTrajectory(ballRadius, physicsEngine.CalculateTrajectory(ballPosition, (ballPosition - p).Normalize(), ballRadius));
+
+                Step();
+                hueputalo = false;
             }
+            else hueputalo= true;
         }
         #endregion
 
@@ -137,6 +142,18 @@ namespace PoolEight
             Vector2D force = Math.Min((ball.position - p).Length, 200) * 10 * n;
 
             physicsEngine.ApplyForce(ball, force);
+
+            isHit = true;
+        }
+
+        private void Step()
+        {
+            if (physicsEngine.Resting || isHit == true|| isTriggered == false || hueputalo == true)
+            {
+                SwitchTurn();
+                isTriggered = false;
+                isHit = false;
+            }
         }
 
 
@@ -144,16 +161,20 @@ namespace PoolEight
         {
             if (turn == 0)
             {
-                HitTurnMessage = $"{players[turn].Name} должен забить полосатый шар";
+                turn = 1;
+                HitTurnMessage = $"{players[turn].Name} должен забить цветной шар";
             }
             else if (turn == 1)
             {
-                HitTurnMessage = $"{players[turn].Name} должен забить цветной шар";
+                turn = 0;
+                HitTurnMessage = $"{players[turn].Name} должен забить полосатый шар";
             }
         }
 
         private void Trigger(object sender, TriggerEvent e)
         {
+            isTriggered = true;
+
             if (e.ball.index == 0)
             {
                 e.ball.velocity = new Vector2D(0, 0);
