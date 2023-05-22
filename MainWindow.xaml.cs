@@ -11,6 +11,9 @@ using System.Collections.Generic;
 using Physics.Events.Triggers;
 using System.Runtime.CompilerServices;
 using GameRules;
+using System.Threading;
+using System.Diagnostics;
+using Microsoft.Win32;
 
 namespace PoolEight
 {
@@ -64,9 +67,6 @@ namespace PoolEight
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private bool isHit = false;
-        private bool isTriggered = false;
-
         #region Gameloop
         private void Update(object sender, EventArgs e)
         {
@@ -78,6 +78,7 @@ namespace PoolEight
         private void UpdateUI()
         {
             renderer.Show(HitTurn);
+            HitTurnMessage = players[turn].Name;
             Score = $"{players[0].Name}\tСчёт:{players[0].Score}"
                 + $"\n{players[1].Name}\tСчёт:{players[1].Score}\t";
         }
@@ -106,9 +107,8 @@ namespace PoolEight
 
                 renderer.DrawQueue(ballPosition, ballRadius, p);
                 renderer.DrawTrajectory(ballRadius, physicsEngine.CalculateTrajectory(ballPosition, (ballPosition - p).Normalize(), ballRadius));
-
-                Step();
             }
+            
         }
         #endregion
 
@@ -139,19 +139,7 @@ namespace PoolEight
 
             physicsEngine.ApplyForce(ball, force);
 
-            isHit = true;
         }
-
-        private void Step()
-        {
-            if (physicsEngine.Resting || isHit == true|| isTriggered == false)
-            {
-                SwitchTurn();
-                isTriggered = false;
-                isHit = false;
-            }
-        }
-
 
         private void SwitchTurn()
         {
@@ -169,57 +157,68 @@ namespace PoolEight
 
         private void Trigger(object sender, TriggerEvent e)
         {
-            isTriggered = true;
+ 
 
             if (e.ball.index == 0)
             {
                 e.ball.velocity = new Vector2D(0, 0);
                 e.ball.position = new Vector2D(273, 547 / 2);
-                if (miss == 0)
-                {
-                    miss = 1;
-                    turn = 0;
 
-                }
-                else if (miss == 1)
-                {
-                    turn = 1;
-                    miss = 0;
-                }
+                miss++;
 
+                if(miss % 2 == 1)
+                {
+                    players[turn].Score -= 2;
+                    SwitchTurn();
+                }
+                else
+                {
+                    players[turn].Score -= 2;
+                    SwitchTurn();
+                }
                 return;
             }
 
-            if (physicsEngine.balls.Count == 2)
+            switch (turn)
             {
-                Won();
-            }
-            else if (e.ball.index == 8)
-            {
-                Lost();
-            }
+                case 0:
 
-            if (turn == 0)
-            {
-                if (e.ball.index > 8)
-                   players[0].Score += 10;
-                if (e.ball.index < 8)
-                    players[0].Score -= 5;
-                if (miss == 0)
-                {
-                    players[0].Score -= 2;
-                }
-            }
-            else if(turn == 1)
-            {
-                if (e.ball.index < 8 || e.ball.index > 0)
-                    players[1].Score += 10;
-                if (e.ball.index > 8)
-                    players[1].Score -= 5;
-                if (miss == 1)
-                {
-                    players[1].Score -= 2;
-                }
+                    if (e.ball.index > 8)
+                        players[0].Score += 10;
+
+                    if (e.ball.index < 8 && e.ball.index != 0)
+                    {
+                        players[0].Score -= 5;
+                        SwitchTurn();
+                    }
+
+                    if (physicsEngine.HalfBalls.Count == 7 && e.ball.index == 8)
+                        Won();
+                    else if (e.ball.index == 8)
+                    {
+                        Lost();
+                    }
+
+                    break; 
+                case 1:
+
+                    if (e.ball.index < 8 && e.ball.index > 0)
+                        players[1].Score += 10;
+
+                    if (e.ball.index > 8)
+                    {
+                        players[1].Score -= 5;
+                        SwitchTurn();
+                    }
+
+                    if (physicsEngine.FullBalls.Count == 7 && e.ball.index == 8)
+                        Won();
+                    else if(e.ball.index == 8)
+                    {
+                        Lost();
+                    }
+                    break;
+
             }
             PBallWithG newBall = new PBallWithG(e.ball.index, 20, new Vector2D(100, 100), e.ball.velocity);
 
@@ -291,7 +290,6 @@ namespace PoolEight
         {
             DataContext = this;
             InitializeComponent();
-
             physicsEngine = new PhysicsEngine();
             physicsEngine.Trigger += Trigger;
 
