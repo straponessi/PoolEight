@@ -66,8 +66,6 @@ namespace PoolEight
 
         private bool isHit = false;
         private bool isTriggered = false;
-        private bool hueputalo = false;
-
 
         #region Gameloop
         private void Update(object sender, EventArgs e)
@@ -110,9 +108,7 @@ namespace PoolEight
                 renderer.DrawTrajectory(ballRadius, physicsEngine.CalculateTrajectory(ballPosition, (ballPosition - p).Normalize(), ballRadius));
 
                 Step();
-                hueputalo = false;
             }
-            else hueputalo= true;
         }
         #endregion
 
@@ -148,7 +144,7 @@ namespace PoolEight
 
         private void Step()
         {
-            if (physicsEngine.Resting || isHit == true|| isTriggered == false || hueputalo == true)
+            if (physicsEngine.Resting || isHit == true|| isTriggered == false)
             {
                 SwitchTurn();
                 isTriggered = false;
