@@ -96,8 +96,8 @@ namespace Physics
             DetectCollisions(jar, FullBalls, false);
             DetectCollisions(jar, HalfBalls, false);
 
-            if (Resting) return;
-
+            if (Resting)   return;
+         
             Resting = true;
 
             Simulate(dt, balls);

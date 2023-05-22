@@ -59,8 +59,6 @@ namespace PoolEight
             }
         }
 
-        public bool isTriggerWorks = false;
-
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -139,15 +137,6 @@ namespace PoolEight
             Vector2D force = Math.Min((ball.position - p).Length, 200) * 10 * n;
 
             physicsEngine.ApplyForce(ball, force);
-
-            if(physicsEngine.Resting == true || isTriggerWorks == false)
-            {
-                SwitchTurn();
-            }
-            else
-            {
-                isTriggerWorks = false;
-            }
         }
 
 
@@ -165,8 +154,6 @@ namespace PoolEight
 
         private void Trigger(object sender, TriggerEvent e)
         {
-            isTriggerWorks = true;
-
             if (e.ball.index == 0)
             {
                 e.ball.velocity = new Vector2D(0, 0);
