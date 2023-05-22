@@ -28,9 +28,7 @@ namespace PoolEight
            new Player{ },
            new Player{ }
         };
-        int turn = 0;
-        //Player player1 = new Player();
-        //Player player2 = new Player();
+        private int turn = 0;
 
 
         private string score;
@@ -46,6 +44,22 @@ namespace PoolEight
                 }
             }
         }
+        private string hitTurnMessage;
+
+        public string HitTurnMessage
+        {
+            get { return hitTurnMessage; }
+            set
+            {
+                if (hitTurnMessage != value)
+                {
+                    hitTurnMessage = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool isTriggerWorks = false;
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -63,10 +77,12 @@ namespace PoolEight
 
         private void UpdateUI()
         {
-            //     CalculateScore(players[0], players[1]);
-            Score = $"{players[0].Name}\tСчёт:{players[0].Score}" + "\nХодит\t"
-                + players[turn].Name
-                + $"\n{players[1].Name}\tСчёт:{players[1].Score}\t" + $"{physicsEngine.FullBalls.Count}" + $"{physicsEngine.HalfBalls.Count}";
+
+            renderer.Show(HitTurn);
+            SwitchTurn();
+
+            Score = $"{players[0].Name}\tСчёт:{players[0].Score}" 
+                + $"\n{players[1].Name}\tСчёт:{players[1].Score}\t";
         }
 
         private void UpdatePhysics()
@@ -74,8 +90,8 @@ namespace PoolEight
             long nextT = DateTime.Now.Ticks / 10000;
             for (long i = t; i < nextT; i += 8)
             {
-                physicsEngine.Step(0.008);
-                if (nextT - i > 500) break;
+               physicsEngine.Step(0.008);
+               if (nextT - i > 500) break;
             }
 
             t = DateTime.Now.Ticks / 10000;
@@ -108,41 +124,6 @@ namespace PoolEight
             renderer.Show(LooseScreen, true);
         }
 
-
-        // private (int, int) CalculateScore(Player player1, Player player2)
-        // {
-        //     if (turn == 0)
-        //     {
-        //         int sum = 0;
-        //         for (int i = 0; i < physicsEngine.FullBalls.Count; i++)
-        //         {
-        //             sum += physicsEngine.FullBalls[i].index;
-        //             player1.Score += sum;
-        //         }
-        //         if (miss == 1)
-        //         {
-        //             player1.Score -= 2;
-        //             turn = 1;
-        //         }
-        //     }
-        //     if(turn == 1)
-        //     {
-        //         int sum = 0;
-        //         for (int i = 0; i < physicsEngine.HalfBalls.Count; i++)
-        //         {
-        //             sum += physicsEngine.HalfBalls[i].index;
-        //             player2.Score += sum;
-        //         }
-        //         if (miss == 0)
-        //         {
-        //             player2.Score -= 2;
-        //             turn = 0;
-        //         }
-        //     }
-        //     return(player1.Score, player2.Score);
-        //     
-        // }
-
         private void HitBall(object sender, RoutedEventArgs e)
         {
             if (!physicsEngine.Resting)
@@ -158,10 +139,34 @@ namespace PoolEight
             Vector2D force = Math.Min((ball.position - p).Length, 200) * 10 * n;
 
             physicsEngine.ApplyForce(ball, force);
+
+            if(physicsEngine.Resting == true || isTriggerWorks == false)
+            {
+                SwitchTurn();
+            }
+            else
+            {
+                isTriggerWorks = false;
+            }
+        }
+
+
+        private void SwitchTurn()
+        {
+            if (turn == 0)
+            {
+                HitTurnMessage = $"{players[turn].Name} должен забить полосатый шар";
+            }
+            else if (turn == 1)
+            {
+                HitTurnMessage = $"{players[turn].Name} должен забить цветной шар";
+            }
         }
 
         private void Trigger(object sender, TriggerEvent e)
         {
+            isTriggerWorks = true;
+
             if (e.ball.index == 0)
             {
                 e.ball.velocity = new Vector2D(0, 0);
@@ -169,13 +174,15 @@ namespace PoolEight
                 if (miss == 0)
                 {
                     miss = 1;
+                    turn = 0;
+
                 }
                 else if (miss == 1)
                 {
+                    turn = 1;
                     miss = 0;
                 }
 
-                //     miss++;
                 return;
             }
 
@@ -187,12 +194,29 @@ namespace PoolEight
             {
                 Lost();
             }
-            else if (e.ball.index < 8)
-                players[0].Score ++;
-            else if (e.ball.index > 8)
-                players[1].Score++;
 
-
+            if (turn == 0)
+            {
+                if (e.ball.index > 8)
+                   players[0].Score += 10;
+                if (e.ball.index < 8)
+                    players[0].Score -= 5;
+                if (miss == 0)
+                {
+                    players[0].Score -= 2;
+                }
+            }
+            else if(turn == 1)
+            {
+                if (e.ball.index < 8 || e.ball.index > 0)
+                    players[1].Score += 10;
+                if (e.ball.index > 8)
+                    players[1].Score -= 5;
+                if (miss == 1)
+                {
+                    players[1].Score -= 2;
+                }
+            }
             PBallWithG newBall = new PBallWithG(e.ball.index, 20, new Vector2D(100, 100), e.ball.velocity);
 
             physicsEngine.TransferBall(e.ball, newBall);

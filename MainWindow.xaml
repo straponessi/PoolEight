@@ -132,6 +132,10 @@
         <materialDesign:Card VerticalAlignment="Bottom" HorizontalAlignment="Center"  IsHitTestVisible="False" Margin="0 16" Visibility="Hidden" x:Name="PlayerBoard">
             <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Foreground="{StaticResource PrimaryHueMidBrush}" Padding="16" FontSize="20" Width="400" TextAlignment="Center" Text="{Binding Path=Score, Mode=OneWay}" />
         </materialDesign:Card>
-        
+
+        <materialDesign:Card VerticalAlignment="Bottom" HorizontalAlignment="Center"  IsHitTestVisible="False" Margin="850 100 0 16" Visibility="Hidden" x:Name="HitTurn">
+            <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Foreground="{StaticResource PrimaryHueMidBrush}" Padding="16" FontSize="20" Width="400" TextAlignment="Center" Text="{Binding Path=HitTurnMessage, Mode=OneWay}" />
+        </materialDesign:Card>
+
     </Grid>
 </Window>
