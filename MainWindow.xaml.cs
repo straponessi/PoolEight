@@ -254,8 +254,6 @@ namespace PoolEight
             physicsEngine.TransferBall(e.ball, newBall);
             renderer.AddSideBall(newBall);
             renderer.RemoveBall(e.ball);
-            
-
         }
         #endregion
 
