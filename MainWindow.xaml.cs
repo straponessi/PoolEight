@@ -31,6 +31,7 @@ namespace PoolEight
            new Player{ },
            new Player{ }
         };
+
         private int turn = 0;
 
         private string score;
@@ -47,7 +48,6 @@ namespace PoolEight
             }
         }
         private string hitTurnMessage;
-
         public string HitTurnMessage
         {
             get { return hitTurnMessage; }
@@ -60,6 +60,9 @@ namespace PoolEight
                 }
             }
         }
+
+        public bool isHit = false;
+        public bool isTriggered = false;
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -78,9 +81,15 @@ namespace PoolEight
         private void UpdateUI()
         {
             renderer.Show(HitTurn);
-            HitTurnMessage = players[turn].Name;
-            Score = $"{players[0].Name}\tСчёт:{players[0].Score}"
-                + $"\n{players[1].Name}\tСчёт:{players[1].Score}\t";
+
+            Score = $"{players[0].Name}\tСчёт:{players[0].Score}\n"
+                + $"{players[1].Name}\tСчёт:{players[1].Score}";
+
+            if (isHit && physicsEngine.Resting && !isTriggered)
+            {
+                SwitchTurn();
+                isHit = false;
+            }
         }
 
         private void UpdatePhysics()
@@ -108,8 +117,8 @@ namespace PoolEight
                 renderer.DrawQueue(ballPosition, ballRadius, p);
                 renderer.DrawTrajectory(ballRadius, physicsEngine.CalculateTrajectory(ballPosition, (ballPosition - p).Normalize(), ballRadius));
             }
-            
         }
+
         #endregion
 
         #region Gameeventhandlers and utitilies
@@ -139,25 +148,87 @@ namespace PoolEight
 
             physicsEngine.ApplyForce(ball, force);
 
+            isHit = true;
         }
 
-        private void SwitchTurn()
+        private void CalculateScore(TriggerEvent e)
+        {
+            switch (turn)
+            {
+                case 0:
+
+                    if (e.ball.index > 8)
+                    {
+                        players[0].Score += 10;
+                        isTriggered = false;
+                    }
+
+                    if (e.ball.index < 8 && e.ball.index != 0)
+                    {
+                        players[0].Score -= 5;
+                        isTriggered = false;
+                    }
+
+                    if (physicsEngine.HalfBalls.Count == 7 && e.ball.index == 8)
+                        Won();
+                    else if (e.ball.index == 8)
+                    {
+                        Lost();
+                    }
+
+                    break;
+                case 1:
+
+                    if (e.ball.index < 8 && e.ball.index > 0)
+                    {
+                        players[1].Score += 10;
+                        isTriggered = false;
+                    }
+
+                    if (e.ball.index > 8)
+                    {
+                        players[1].Score -= 5;
+                        isTriggered = false;
+                    }
+
+                    if (physicsEngine.FullBalls.Count == 7 && e.ball.index == 8)
+                        Won();
+                    else if (e.ball.index == 8)
+                    {
+                        Lost();
+                    }
+                    break;
+            }
+        }
+
+        private string SwitchTurn()
         {
             if (turn == 0)
             {
                 turn = 1;
                 HitTurnMessage = $"{players[turn].Name} должен забить цветной шар";
+                if(physicsEngine.FullBalls.Count == 7)
+                {
+                    HitTurnMessage = $"{players[turn].Name} должен забить черный шар";
+                }
             }
             else if (turn == 1)
             {
                 turn = 0;
                 HitTurnMessage = $"{players[turn].Name} должен забить полосатый шар";
+                if (physicsEngine.HalfBalls.Count == 7)
+                {
+                    HitTurnMessage = $"{players[turn].Name} должен забить черный шар ";
+                }
             }
+            return hitTurnMessage;
         }
 
         private void Trigger(object sender, TriggerEvent e)
         {
- 
+            isTriggered = true;
+
+            CalculateScore(e);
 
             if (e.ball.index == 0)
             {
@@ -169,62 +240,22 @@ namespace PoolEight
                 if(miss % 2 == 1)
                 {
                     players[turn].Score -= 2;
-                    SwitchTurn();
+                    isTriggered = false;
                 }
                 else
                 {
                     players[turn].Score -= 2;
-                    SwitchTurn();
+                    isTriggered = false;
                 }
                 return;
-            }
-
-            switch (turn)
-            {
-                case 0:
-
-                    if (e.ball.index > 8)
-                        players[0].Score += 10;
-
-                    if (e.ball.index < 8 && e.ball.index != 0)
-                    {
-                        players[0].Score -= 5;
-                        SwitchTurn();
-                    }
-
-                    if (physicsEngine.HalfBalls.Count == 7 && e.ball.index == 8)
-                        Won();
-                    else if (e.ball.index == 8)
-                    {
-                        Lost();
-                    }
-
-                    break; 
-                case 1:
-
-                    if (e.ball.index < 8 && e.ball.index > 0)
-                        players[1].Score += 10;
-
-                    if (e.ball.index > 8)
-                    {
-                        players[1].Score -= 5;
-                        SwitchTurn();
-                    }
-
-                    if (physicsEngine.FullBalls.Count == 7 && e.ball.index == 8)
-                        Won();
-                    else if(e.ball.index == 8)
-                    {
-                        Lost();
-                    }
-                    break;
-
             }
             PBallWithG newBall = new PBallWithG(e.ball.index, 20, new Vector2D(100, 100), e.ball.velocity);
 
             physicsEngine.TransferBall(e.ball, newBall);
             renderer.AddSideBall(newBall);
             renderer.RemoveBall(e.ball);
+            
+
         }
         #endregion
 
@@ -240,6 +271,7 @@ namespace PoolEight
             CompositionTarget.Rendering += Update;
             renderer.ResetAll(physicsEngine.balls);
             identification.Visibility = Visibility.Hidden;
+            HitTurnMessage = players[turn].Name + "должен забить полосатый шар";
         }
 
         private void Play(object sender, RoutedEventArgs e)
@@ -292,6 +324,7 @@ namespace PoolEight
             InitializeComponent();
             physicsEngine = new PhysicsEngine();
             physicsEngine.Trigger += Trigger;
+
 
             renderer = new Renderer(Table, Half, Full, Queue, Overlay);
         }
