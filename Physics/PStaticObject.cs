@@ -8,7 +8,7 @@ namespace Physics
     {
         public List<LodGroup> lodGroups = new List<LodGroup>();
 
-        public double MinDistance(Vector2D p, double r = 0, bool ignoreLodGroups = false) // Raymarching has to ignore the LodGroups to function properly
+        public double MinDistance(Vector2D p, double r = 0, bool ignoreLodGroups = false) 
         {
             double distance = double.PositiveInfinity;
 

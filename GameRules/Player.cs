@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GameRules
+﻿namespace GameRules
 {
     class Player
     {
@@ -15,6 +9,5 @@ namespace GameRules
         {
 
         }
-
     }
 }

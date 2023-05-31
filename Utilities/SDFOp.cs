@@ -2,35 +2,35 @@
 
 namespace Utilities
 {
-    static class SDFOp
+    static class SDFOp //функции знакового расстояния
     {
-        public static double Union(double d1, double d2) => Math.Min(d1, d2);
-        public static double Subtraction(double d1, double d2) => Math.Max(-d1, d2);
-        public static double Intersection(double d1, double d2) => Math.Max(d1, d2);
-        public static double SmoothUnion(double d1, double d2, double k)
-        {
-            double h = MathV.Clamp(0.5 + 0.5 * (d2 - d1) / k, 0.0, 1.0);
+        public static double Union(double d1, double d2) => Math.Min(d1, d2);           //выполняет операцию объединения двух SDF, выбирая минимальное значение расстояния. Возвращаемое значение будет представлять собой объединение двух SDF.
+        public static double Subtraction(double d1, double d2) => Math.Max(-d1, d2);    //выполняет операцию вычитания одного SDF из другого. Он использует максимальное значение между отрицательным значением d1 и d2. Результат будет представлять собой разность двух SDF.
+        public static double Intersection(double d1, double d2) => Math.Max(d1, d2);    //Этот метод выполняет операцию пересечения двух SDF, выбирая максимальное значение расстояния. Возвращаемое значение будет представлять собой пересечение двух SDF.
+        public static double SmoothUnion(double d1, double d2, double k)                //выполняет сглаженную операцию объединения двух SDF. Он использует параметр k для контроля силы сглаживания. Внутри метода вычисляется коэффициент h, который определяет, 
+        {                                                                               //насколько близки значения d1 и d2. Затем с помощью метода MathV.Mix выполняется интерполяция между d1 и d2 на основе значения h. 
+            double h = MathV.Clamp(0.5 + 0.5 * (d2 - d1) / k, 0.0, 1.0);                //Результат также сглаживается с использованием k для создания плавного перехода.
             return MathV.Mix(d2, d1, h) - k * h * (1.0 - h);
         }
-        public static double SmoothSubtraction(double d1, double d2, double k)
-        {
-            double h = MathV.Clamp(0.5f - 0.5f * (d2 + d1) / k, 0.0f, 1.0f);
+        public static double SmoothSubtraction(double d1, double d2, double k)          //выполняет сглаженную операцию вычитания одного SDF из другого. Он использует параметр k для контроля силы сглаживания. Внутри метода вычисляется коэффициент h, который определяет, 
+        {                                                                               //насколько близки значения d1 и -d2. Затем с помощью метода MathV.Mix выполняется интерполяция между d2 и -d1 на основе значения h. 
+            double h = MathV.Clamp(0.5f - 0.5f * (d2 + d1) / k, 0.0f, 1.0f);            //Результат также сглаживается с использованием k для создания плавного перехода.
             return MathV.Mix(d2, -d1, h) + k * h * (1.0f - h);
         }
-        public static double SmoothIntersection(double d1, double d2, double k)
-        {
-            double h = MathV.Clamp(0.5 - 0.5 * (d2 - d1) / k, 0.0, 1.0);
+        public static double SmoothIntersection(double d1, double d2, double k)         //выполняет сглаженную операцию пересечения двух SDF. Он использует параметр k для контроля силы сглаживания. Внутри метода вычисляется коэффициент h, который определяет,
+        {                                                                               // насколько близки значения d1 и d2. Затем с помощью метода MathV.Mix выполняется интерполяция между d1 и d2 на основе значения h.
+            double h = MathV.Clamp(0.5 - 0.5 * (d2 - d1) / k, 0.0, 1.0);                // Результат также сглаживается с использованием k для создания плавного перехода.
             return MathV.Mix(d2, d1, h) + k * h * (1.0 - h);
         }
 
-        public static double Negate(double d) => -d;
+        public static double Negate(double d) => -d;                                    // выполняет операцию отрицания значения d, возвращая его отрицательное значение.
 
-        // Numerical normal generation
-        public static Vector2D GetNormal(Vector2D p, Func<Vector2D, double, bool, double> distanceFunction)
-        {
-            double h = 0.001f;
 
-            Vector2D n = new Vector2D(
+        public static Vector2D GetNormal(Vector2D p, Func<Vector2D, double, bool, double> distanceFunction)             //вычисляет нормаль к поверхности SDF в заданной точке p. 
+        {                                                                                                               //Он использует численное дифференцирование, чтобы оценить изменение значения SDF в разных направлениях. 
+            double h = 0.001f;                                                                                          //Внутри метода вычисляются значения SDF для соседних точек и используется разность между этими значениями 
+                                                                                                                        //для определения направления нормали. Затем полученный вектор нормали нормализуется и возвращается в качестве результата.
+            Vector2D n = new Vector2D(                                                                                  //
                 distanceFunction(p + new Vector2D(h, 0), 0, true) - distanceFunction(p - new Vector2D(h, 0), 0, true),
                 distanceFunction(p + new Vector2D(0, h), 0, true) - distanceFunction(p - new Vector2D(0, h), 0, true)
             );

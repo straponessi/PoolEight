@@ -20,14 +20,16 @@ namespace Utilities
             y = _xy;
         }
 
-        public Vector2D Normalize() => this / Length;
+        public Vector2D Normalize() => this / Length; //возвращает нормализованную версию вектора, то есть вектор с тем же направлением, но с единичной длиной.
+                                                      //Это достигается путем деления каждой компоненты вектора на его длину.
 
-        public double Length
+        public double Length                        //возвращает длину вектора, рассчитанную с использованием формулы для нахождения гипотенузы прямоугольного треугольника.
         {
             get { return Math.Sqrt(x * x + y * y); }
         }
 
-        public double SquaredLength
+        public double SquaredLength                 //возвращает квадрат длины вектора. Вместо извлечения квадратного корня, оно просто складывает квадраты компонент вектора,
+                                                    //что может быть полезно в некоторых случаях для ускорения вычислений.
         {
             get { return x * x + y * y; }
         }
@@ -37,20 +39,20 @@ namespace Utilities
         public static Vector2D operator -(Vector2D a) => new Vector2D(-a.x, -a.y);
 
         // Vector2D +- Vector2D
-        public static Vector2D operator +(Vector2D a, Vector2D b) => new Vector2D(a.x + b.x, a.y + b.y);
-        public static Vector2D operator -(Vector2D a, Vector2D b) => a + (-b);
+        public static Vector2D operator +(Vector2D a, Vector2D b) => new Vector2D(a.x + b.x, a.y + b.y); //Сложение векторов
+        public static Vector2D operator -(Vector2D a, Vector2D b) => a + (-b);                          //Вычитание векторов
 
         // Vector2D */ Vector2D
-        public static Vector2D operator *(Vector2D a, Vector2D b) => new Vector2D(a.x * b.x, a.y * b.y);
-        public static Vector2D operator /(Vector2D a, Vector2D b) => new Vector2D(a.x / b.x, a.y / b.y);
+        public static Vector2D operator *(Vector2D a, Vector2D b) => new Vector2D(a.x * b.x, a.y * b.y); //Выполняют поэлементное умножение 
+        public static Vector2D operator /(Vector2D a, Vector2D b) => new Vector2D(a.x / b.x, a.y / b.y); //И деление векторов.
 
         // Vector2D */ double
-        public static Vector2D operator *(Vector2D a, double s) => new Vector2D(a.x * s, a.y * s);
-        public static Vector2D operator /(Vector2D a, double s) => a * (1 / s);
+        public static Vector2D operator *(Vector2D a, double s) => new Vector2D(a.x * s, a.y * s);       //Умножение 
+        public static Vector2D operator /(Vector2D a, double s) => a * (1 / s);                          //И деление вектора на скаляр
 
         // double */ Vector2D
-        public static Vector2D operator *(double s, Vector2D a) => a * s;
-        public static Vector2D operator /(double s, Vector2D a) => a / s;
+        public static Vector2D operator *(double s, Vector2D a) => a * s;                                //Умножение 
+        public static Vector2D operator /(double s, Vector2D a) => a / s;                                // И деление скаляра на вектор
 
         // bool operators componentwise
         public static bool operator <(Vector2D a, Vector2D b) => a.x < b.x && a.y < b.y;

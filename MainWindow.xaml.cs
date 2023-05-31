@@ -7,13 +7,9 @@ using Utilities;
 using System.Windows.Media;
 using System.Windows.Input;
 using System.ComponentModel;
-using System.Collections.Generic;
 using Physics.Events.Triggers;
 using System.Runtime.CompilerServices;
 using GameRules;
-using System.Threading;
-using System.Diagnostics;
-using Microsoft.Win32;
 
 namespace PoolEight
 {

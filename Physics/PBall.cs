@@ -44,11 +44,9 @@ namespace Physics
 
             Vector2D normalizedVelocity = velocity.Normalize();
 
-            // Leapfrog integration scheme
             position += velocity * dt + normalizedVelocity * 5 / 2 * r * g * (-cr - u0) * dt * dt / 2;
             velocity += dt * (normalizedVelocity * 5 / 2 * r * g * (-cr - u0));
 
-            //Calculate new rotation matrix
             Vector2D tangentVelocity = new Vector2D(-velocity.y, velocity.x).Normalize();
 
             phi = velocity * dt + normalizedVelocity * 5 / 2 * r * g * (-cr - u0) * dt * dt / 2 / r;
